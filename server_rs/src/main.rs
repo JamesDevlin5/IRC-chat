@@ -1,11 +1,13 @@
 use std::io::{Read, Write};
 use std::net::{TcpListener, TcpStream};
 use std::thread;
+use std::str::from_utf8;
 
 fn handle_client(mut stream: TcpStream) {
     let mut data = [0 as u8; 20]; // 20 byte buffer
 
     let size = stream.read(&mut data).expect("Could not read from socket!");
+    println!("Received: {}", from_utf8(&data).unwrap());
     stream.write(&data[0..size]).unwrap();
 }
 
