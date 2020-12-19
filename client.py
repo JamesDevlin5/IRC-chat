@@ -18,7 +18,6 @@ class Client:
         return self._socket.recv(1024)
 
     def close(self):
-        self._socket.shutdown(socket.SHUT_RDWR)
         self._socket.close()
 
 
