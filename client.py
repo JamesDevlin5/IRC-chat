@@ -28,3 +28,5 @@ client.send(b"Hello World!")
 data = client.recv()
 
 print(f"Received {repr(data)}")
+
+client.close()
