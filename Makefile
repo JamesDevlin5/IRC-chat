@@ -9,3 +9,18 @@ pyclient:
 
 pc: pyclient
 
+rserver:
+	rustc server.rs
+	./server
+
+rs: rserver
+
+rclient:
+	rustc client.rs
+	./client
+
+rc: rclient
+
+clean:
+	-rm {client,server}
+
