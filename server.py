@@ -28,11 +28,14 @@ server.listen()
 
 
 conn, addr = server.accept()
-with conn:
-    print(f"Connected to {addr}")
-    while True:
-        data = conn.recv(1024)
-        if not data:
-            break
-        print(f"Sending {repr(data)}")
-        conn.sendall(data)
+
+print(f"Connected to {addr}")
+while True:
+    data = conn.recv(1024)
+    if not data:
+        break
+    print(f"Sending {repr(data)}")
+    conn.sendall(data)
+
+conn.close()
+server.close()
