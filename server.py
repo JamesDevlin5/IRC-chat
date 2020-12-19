@@ -1,7 +1,7 @@
 import socket
 
 HOST = "127.0.0.1"
-PORT = 65432
+PORT = 43210
 
 
 class Server:
@@ -18,7 +18,6 @@ class Server:
         return self._socket.accept()
 
     def close(self):
-        self._socket.shutdown(socket.SHUT_RDWR)
         self._socket.close()
 
 
