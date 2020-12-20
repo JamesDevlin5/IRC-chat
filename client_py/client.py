@@ -3,7 +3,7 @@ import socket
 import ipaddress
 
 # Default Values
-DEFAULT_IP = "127.0.0.1"
+DEFAULT_HOST = "127.0.0.1"
 DEFAULT_PORT = 43210
 
 
@@ -12,8 +12,8 @@ def create_parser():
     parser = argparse.ArgumentParser(description="An IRC client.")
     parser.add_argument(
         "host",
-        default=DEFAULT_IP,
         type=ipaddress.ip_address,
+        default=DEFAULT_HOST,
         help="the target host to connect to",
     )
     parser.add_argument(
