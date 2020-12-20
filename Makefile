@@ -4,38 +4,42 @@ default:
 	@echo "            1.  Whether you are running the client or server"
 	@echo "            2.  Which language you are running (python, rust, java)"
 
+define make_target
+	cd $(1) && $(MAKE)
+endef
+
 pyserver:
-	python3 server_py/server.py
+	@$(call make_target,server_py)
 
 ps: pyserver
 
 pyclient:
-	python3 client_py/client.py
+	@$(call make_target,client_py)
 
 pc: pyclient
 
 rserver: cleanrust
-	cd server_rs && cargo run
+	@$(call make_target,server_rs)
 
 rs: rserver
 
 rclient: cleanrust
-	cd client_rs && cargo run
+	@$(call make_target,client_rs)
 
 rc: rclient
 
 jserver: deps cleanjava
-	cd server_java && $(MAKE)
+	@$(call make_target,server_java)
 
 js: jserver
 
 jclient: deps cleanjava
-	cd client_java && $(MAKE)
+	@$(call make_target,client_java)
 
 jc: jclient
 
 deps: cleanresources
-	cd resources && $(MAKE)
+	@$(call make_target,resources)
 
 cleanjava:
 	@cd client_java && $(MAKE) clean
