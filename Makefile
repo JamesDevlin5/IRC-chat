@@ -5,7 +5,11 @@ default:
 	@echo "            2.  Which language you are running (python, rust, java)"
 
 define make_target
-	cd $(1) && $(MAKE)
+	@cd $(1) && $(MAKE)
+endef
+
+define clean_target
+	-@cd $(1) && $(MAKE) clean
 endef
 
 pyserver:
@@ -18,22 +22,36 @@ pyclient:
 
 pc: pyclient
 
-rserver: cleanrust
+cleanrserver:
+	@$(call clean_target,server_rs)
+
+rserver: cleanrserver
 	@$(call make_target,server_rs)
 
 rs: rserver
 
-rclient: cleanrust
+cleanrclient:
+	@$(call clean_target,client_rs)
+
+rclient: cleanrclient
 	@$(call make_target,client_rs)
 
 rc: rclient
 
-jserver: deps cleanjava
+cleanrust: cleanrserver cleanrclient
+
+cleanjserver:
+	@$(call clean_target,server_java)
+
+jserver: deps cleanjserver
 	@$(call make_target,server_java)
 
 js: jserver
 
-jclient: deps cleanjava
+cleanjclient:
+	@$(call clean_target,client_java)
+
+jclient: deps cleanjclient
 	@$(call make_target,client_java)
 
 jc: jclient
@@ -41,16 +59,12 @@ jc: jclient
 deps: cleanresources
 	@$(call make_target,resources)
 
-cleanjava:
-	@cd client_java && $(MAKE) clean
-	@cd server_java && $(MAKE) clean
+cleanjava: cleanjserver cleanjclient
 
-cleanrust:
-	@cd client_rs && cargo clean
-	@cd server_rs && cargo clean
+cleanrust: cleanrserver cleanrclient
 
 cleanresources:
-	@cd resources && $(MAKE) clean
+	@$(call clean_target,resources)
 
 clean: cleanjava cleanrust cleanresources
 	@echo "[Success] Complete:     all non-essential files cleaned"
