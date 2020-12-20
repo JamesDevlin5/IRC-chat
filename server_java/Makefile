@@ -1,6 +1,10 @@
-default:
+run: compile
+	@java EchoServer
+
+compile:
 	@javac EchoServer.java
-	java EchoServer 43210
 
 clean:
 	@$(RM) *.class
+	@echo "[Success] Deleted:     cleaned java server files"
+

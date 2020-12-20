@@ -20,6 +20,7 @@ commons:
 
 clean_commons:
 	@ls | grep -E "^commons-cli-[0-9]+(\.[0-9]+)*$$" | tr '\n' ' ' | xargs rm -rf
-	@echo "[Success] Deleted:      commons"
+	@echo "[ Info  ] Deleted:      commons"
 
 clean: clean_commons
+	@echo "[Success] Complete:     cleaned all external resources"
