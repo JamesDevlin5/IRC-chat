@@ -19,16 +19,20 @@ rclient:
 
 rc: rclient
 
-jserver:
+jserver: deps
 	cd server_java && $(MAKE)
 
 js: jserver
 
-jclient:
+jclient: deps
 	cd client_java && $(MAKE)
 
 jc: jclient
 
+deps:
+	cd resources && $(MAKE)
+
 clean:
 	cd client_java && $(MAKE) clean
 	cd server_java && $(MAKE) clean
+	cd resources && $(MAKE) clean
