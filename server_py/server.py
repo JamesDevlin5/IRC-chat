@@ -8,16 +8,17 @@ DEFAULT_PORT = 43210
 
 # Creates the parser with the arguments: <host> <port>
 def create_parser():
-    parser = argparse.ArgumentsParser(description="An IRC server.")
+    parser = argparse.ArgumentParser(description="An IRC server.")
     parser.add_argument(
-        "host",
+        "--host",
+        "-t",
         type=ipaddress.ip_address,
         default=DEFAULT_HOST,
         help="the host to listen on",
         required=False,
     )
     parser.add_argument(
-        "port", type=int, default=DEFAULT_PORT, help="the target port to listen on"
+        "--port", "-p", type=int, default=DEFAULT_PORT, help="the target port to listen on", required=False,
     )
     return parser
 
