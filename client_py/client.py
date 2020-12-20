@@ -1,7 +1,13 @@
+import argparse
 import socket
 
-HOST = "127.0.0.1"
-PORT = 43210
+
+parser = argparse.ArgumentParser(description="An IRC client.")
+parser.add_argument("host", default="127.0.0.1", help="the target host to connect to")
+parser.add_argument(
+    "port", type=int, default=43210, help="the target port to connect to"
+)
+args = parser.parse_args()
 
 
 class Client:
@@ -22,7 +28,7 @@ class Client:
 
 
 client = Client()
-client.connect((HOST, PORT))
+client.connect((args.host, args.port))
 client.send(b"Hello World!")
 data = client.recv()
 
