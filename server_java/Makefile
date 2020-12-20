@@ -1,6 +1,6 @@
 default:
-	javac EchoServer.java
+	@javac EchoServer.java
 	java EchoServer 43210
 
 clean:
-	$(RM) *.class
+	@$(RM) *.class

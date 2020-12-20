@@ -3,7 +3,6 @@ pyserver:
 
 ps: pyserver
 
-
 pyclient:
 	python3 client_py/client.py
 
@@ -32,7 +31,18 @@ jc: jclient
 deps:
 	cd resources && $(MAKE)
 
-clean:
-	cd client_java && $(MAKE) clean
-	cd server_java && $(MAKE) clean
-	cd resources && $(MAKE) clean
+cleanjava:
+	@cd client_java && $(MAKE) clean
+	@cd server_java && $(MAKE) clean
+	@echo "Cleaned Java"
+
+cleanrust:
+	@cd client_rs && cargo clean
+	@cd server_rs && cargo clean
+	@echo "Cleaned Rust"
+
+cleanresources:
+	@cd resources && $(MAKE) clean
+	@echo "Cleaned Resources"
+
+clean: cleanjava cleanrust cleanresources

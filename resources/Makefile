@@ -17,7 +17,7 @@ all: java
 java: commons
 
 commons:
-	$(DOWNLOAD_TOOL) commons $(COMMONS_URL)
+	@$(DOWNLOAD_TOOL) commons $(COMMONS_URL)
 
 clean_commons:
 	@ls | grep -E "^commons-cli-[0-9]+(\.[0-9]+)*$$" | tr '\n' ' ' | xargs rm -rf
