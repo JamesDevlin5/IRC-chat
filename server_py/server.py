@@ -23,19 +23,15 @@ def create_parser():
     return parser
 
 
+def create_socket(addr):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.bind(addr)
+    sock.listen()
+    return sock
+
 class Server:
-    def __init__(self):
-        self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-    def startup(self, addr):
-        self.bind(addr)
-        self.listen()
-
-    def bind(self, addr):
-        self._socket.bind(addr)
-
-    def listen(self):
-        self._socket.listen()
+    def __init__(self, addr):
+        self._socket = create_socket(addr)
 
     def accept(self):
         return self._socket.accept()
@@ -46,8 +42,7 @@ class Server:
 
 args = create_parser().parse_args()
 target = (args.host.exploded, args.port)
-server = Server()
-server.startup(target)
+server = Server(target)
 
 
 class Connection:

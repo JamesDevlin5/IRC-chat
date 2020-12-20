@@ -24,12 +24,14 @@ def create_parser():
     return parser
 
 
-class Client:
-    def __init__(self):
-        self._socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+def create_socket(addr):
+    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    sock.connect(addr)
+    return sock
 
-    def connect(self, addr):
-        self._socket.connect(addr)
+class Client:
+    def __init__(self, addr):
+        self._socket = create_socket(addr)
 
     def send(self, msg):
         self._socket.sendall(msg.encode("utf-8"))
@@ -43,8 +45,8 @@ class Client:
 
 args = create_parser().parse_args()
 target = (args.host.exploded, args.port)
-client = Client()
-client.connect(target)
+client = Client(target)
+
 client.send("Hello World!")
 data = client.recv()
 
