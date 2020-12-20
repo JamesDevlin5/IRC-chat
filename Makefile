@@ -1,3 +1,9 @@
+default:
+	@echo "[Error] Default:       no default option available"
+	@echo "        Specify:"
+	@echo "            1.  Whether you are running the client or server"
+	@echo "            2.  Which language you are running (python, rust, java)"
+
 pyserver:
 	python3 server_py/server.py
 
@@ -43,3 +49,4 @@ cleanresources:
 	@cd resources && $(MAKE) clean
 
 clean: cleanjava cleanrust cleanresources
+	@echo "[Success] Complete:     all non-essential files cleaned"
