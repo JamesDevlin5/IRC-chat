@@ -2,18 +2,25 @@ import java.io.*;
 import java.net.*;
 
 public class EchoClient {
+    private static final String DEFAULT_HOST = "127.0.0.1";
+    private static final int DEFAULT_PORT = 43210;
+
     public static void main(String[] args) throws IOException {
 
-        if (args.length != 2) {
-            System.err.println("Usage: java EchoClient <host name> <port number>");
-            System.exit(1);
+        String host = DEFAULT_HOST;
+        int port = DEFAULT_PORT;
+        if (args.length == 2) {
+            host = args[0];
+            port = Integer.parseInt(args[1]);
+        }
+        else if (args.length == 1) {
+            port = Integer.parseInt(args[0]);
         }
 
-        String hostName = args[0];
-        int portNumber = Integer.parseInt(args[1]);
+        System.out.println("Connecting to (" + host + ":" + port + ")");
 
         try (
-            Socket echoSocket = new Socket(args[0], portNumber);
+            Socket echoSocket = new Socket(host, port);
             PrintWriter out = new PrintWriter(echoSocket.getOutputStream(), true);
             BufferedReader in = new BufferedReader(
                 new InputStreamReader(echoSocket.getInputStream())
@@ -26,7 +33,7 @@ public class EchoClient {
                 System.out.println("echo: " + in.readLine());
             }
         } catch (UnknownHostException e) {
-            System.err.println("Invalid host " + hostName);
+            System.err.println("Invalid host " + host);
             System.exit(1);
         } catch (IOException e) {
             System.err.println("I/O error");
