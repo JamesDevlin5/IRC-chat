@@ -8,41 +8,38 @@ pyclient:
 
 pc: pyclient
 
-rserver:
+rserver: cleanrust
 	cd server_rs && cargo run
 
 rs: rserver
 
-rclient:
+rclient: cleanrust
 	cd client_rs && cargo run
 
 rc: rclient
 
-jserver: deps
+jserver: deps cleanjava
 	cd server_java && $(MAKE)
 
 js: jserver
 
-jclient: deps
+jclient: deps cleanjava
 	cd client_java && $(MAKE)
 
 jc: jclient
 
-deps:
+deps: cleanresources
 	cd resources && $(MAKE)
 
 cleanjava:
 	@cd client_java && $(MAKE) clean
 	@cd server_java && $(MAKE) clean
-	@echo "Cleaned Java"
 
 cleanrust:
 	@cd client_rs && cargo clean
 	@cd server_rs && cargo clean
-	@echo "Cleaned Rust"
 
 cleanresources:
 	@cd resources && $(MAKE) clean
-	@echo "Cleaned Resources"
 
 clean: cleanjava cleanrust cleanresources

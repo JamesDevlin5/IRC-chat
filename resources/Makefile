@@ -6,11 +6,10 @@ DOWNLOAD_TOOL=bash -c '\
 	OUT=".""$$NAME""_lib_download"; \
 	\
 	curl --location --output "$$OUT" "$$URL"; \
-	tar -xzvf "$$OUT" -C "$$PWD"; \
+	tar -xzf "$$OUT" -C "$$PWD"; \
 	\
 	rm -f "$$OUT"; \
-	echo "[Success] Installed: ""$$NAME";' DOWNLOAD_TOOL
-
+	echo "[Success] Installed:    ""$$NAME";' DOWNLOAD_TOOL
 
 all: java
 
@@ -21,6 +20,6 @@ commons:
 
 clean_commons:
 	@ls | grep -E "^commons-cli-[0-9]+(\.[0-9]+)*$$" | tr '\n' ' ' | xargs rm -rf
-	@echo "Commons java framework uninstalled."
+	@echo "[Success] Deleted:      commons"
 
 clean: clean_commons
