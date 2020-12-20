@@ -1,13 +1,25 @@
 import argparse
 import socket
+import ipaddress
+
+# Default Values
+DEFAULT_IP = "127.0.0.1"
+DEFAULT_PORT = 43210
 
 
-parser = argparse.ArgumentParser(description="An IRC client.")
-parser.add_argument("host", default="127.0.0.1", help="the target host to connect to")
-parser.add_argument(
-    "port", type=int, default=43210, help="the target port to connect to"
-)
-args = parser.parse_args()
+# Creates the parser with the arguments: <host>, <port>
+def create_parser():
+    parser = argparse.ArgumentParser(description="An IRC client.")
+    parser.add_argument(
+        "host",
+        default=DEFAULT_IP,
+        type=ipaddress.ip_address,
+        help="the target host to connect to",
+    )
+    parser.add_argument(
+        "port", type=int, default=DEFAULT_PORT, help="the target port to connect to"
+    )
+    return parser
 
 
 class Client:
@@ -18,18 +30,20 @@ class Client:
         self._socket.connect(addr)
 
     def send(self, msg):
-        self._socket.sendall(msg)
+        self._socket.sendall(msg.encode("utf-8"))
 
     def recv(self):
-        return self._socket.recv(1024)
+        return self._socket.recv(1024).decode("utf-8")
 
     def close(self):
         self._socket.close()
 
 
+args = create_parser().parse_args()
+target = (args.host.exploded, args.port)
 client = Client()
-client.connect((args.host, args.port))
-client.send(b"Hello World!")
+client.connect(target)
+client.send("Hello World!")
 data = client.recv()
 
 print(f"Received {repr(data)}")
